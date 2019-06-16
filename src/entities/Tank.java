@@ -19,6 +19,7 @@ public class Tank {
         this.tankRadius = tankRadius;
         this.tankHeight = tankHeight;
         this.tankThickness = tankThickness;
+        this.initialFillFactor = initialFillFactor;
         this.leakChance = leakChance;
         this.stationName = stationName;
         this.stationId = stationId;
@@ -28,10 +29,6 @@ public class Tank {
         return id;
     }
 
-    public double getInitialFillFactor() {
-        return initialFillFactor;
-    }
-
     public double getTankRadius() {
         return tankRadius;
     }
@@ -39,6 +36,8 @@ public class Tank {
     public double getTankHeight() {
         return tankHeight;
     }
+
+    public double getInitialFillFactor() { return initialFillFactor; }
 
     public double getTankThickness() {
         return tankThickness;
