@@ -4,9 +4,11 @@ import database.Database;
 import entities.Supplier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.controlsfx.control.Notifications;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,26 +35,46 @@ public class SuppliersController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        suppliersIdColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("id"));
-        suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("name"));
-        suppliersValue1Column.setCellValueFactory(new PropertyValueFactory<Supplier,String>("theftChance"));
-        suppliersTable.setItems(Database.getSuppliers());
+        mapSupplierEntityToTableView();
+        refillSuppliersTableView();
+        initAddSupplierButton();
+        initDeleteRowButton();
+    }
 
+    private void initDeleteRowButton() {
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Supplier selection = suppliersTable.getSelectionModel().getSelectedItem();
+                suppliersTable.getItems().remove(selection);
+                Database.removeSupplier(selection);
+            } catch (Exception ex) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Unexpected error during deletion process!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
+        });
+    }
+
+    private void initAddSupplierButton() {
         addSupplierButton.setOnAction(event -> {
             Database.addSupplier(new Supplier(Database.getSuppliers().size()+1,
                     nameTextField.getText(),
                     Double.parseDouble(value1TextField.getText())));
             nameTextField.setText("");
             value1TextField.setText("");
-            suppliersTable.setItems(Database.getSuppliers());
+            refillSuppliersTableView();
         });
+    }
 
-        deleteRowButton.setOnAction(event -> {
-            try {
-                Supplier selection = suppliersTable.getSelectionModel().getSelectedItem();
-                suppliersTable.getItems().remove(selection);
-                Database.removeSupplier(selection);
-            } catch (Exception ex) {}
-        });
+    private void refillSuppliersTableView() {
+        suppliersTable.setItems(Database.getSuppliers());
+    }
+
+    private void mapSupplierEntityToTableView() {
+        suppliersIdColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("id"));
+        suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("name"));
+        suppliersValue1Column.setCellValueFactory(new PropertyValueFactory<Supplier,String>("theftChance"));
     }
 }

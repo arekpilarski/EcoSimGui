@@ -5,12 +5,15 @@ import entities.Station;
 import entities.Supplier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.controlsfx.control.Notifications;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class StationsController extends Controller implements Initializable {
@@ -48,39 +51,86 @@ public class StationsController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mapStationsEntityToTableView();
+        mapSuppliersEntityToTableView();
+        refillStationsTableView();
+        prepareSuppliersTableView();
+        initAddStationButton();
+        initDeleteRowButton();
+    }
+
+    private void prepareSuppliersTableView() {
+        suppliersTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        suppliersTableView.setItems(Database.getSuppliers());
+    }
+
+    private void mapSuppliersEntityToTableView() {
+        suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
+        suppliersTheftChanceColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("theftChance"));
+    }
+
+    private void refillStationsTableView() {
+        stationsTable.setItems(Database.getStations());
+    }
+
+    private void mapStationsEntityToTableView() {
         stationsIdColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("id"));
         stationsNameColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
         stationsValue1Column.setCellValueFactory(new PropertyValueFactory<Station,String>("fuelSalesFactor"));
         stationsValue2Column.setCellValueFactory(new PropertyValueFactory<Station,String>("climateOffset"));
         stationsSuppliersColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("supplierNames"));
-        stationsTable.setItems(Database.getStations());
+    }
 
-        suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
-        suppliersTheftChanceColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("theftChance"));
-        suppliersTableView.setItems(Database.getSuppliers());
-        suppliersTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+    private void initAddStationButton() {
         addStationButton.setOnAction(event -> {
-            Database.addStation(new Station(Database.getStations().size()+1,
-                    nameTextField.getText(),
-                    Double.parseDouble(value1TextField.getText()),
-                    Double.parseDouble(value2TextField.getText()),
-                    suppliersTableView.getSelectionModel().getSelectedItems()));
-            nameTextField.setText("");
-            value1TextField.setText("");
-            value2TextField.setText("");
-            suppliersTableView.getSelectionModel().clearSelection();
 
+            try {
+                double fuelSalesFactor = Double.parseDouble(value1TextField.getText());
+                double climateOffset = Double.parseDouble(value2TextField.getText());
+                List<Supplier> selectedSuppliers = suppliersTableView.getSelectionModel().getSelectedItems();
+                if(fuelSalesFactor < 0 || climateOffset < 0)
+                    throw new NumberFormatException();
+                Database.addStation(new Station(Database.getStations().size() + 1,
+                        nameTextField.getText(), fuelSalesFactor, climateOffset, selectedSuppliers));
+                clearInput();
 
-            stationsTable.setItems(Database.getStations());
+                refillStationsTableView();
+            } catch (NumberFormatException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Height and Value should be positive numeric values!")
+                        .position(Pos.CENTER)
+                        .showError();
+            } catch (NullPointerException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("No tank id has been selected!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
         });
+    }
 
+    private void initDeleteRowButton() {
         deleteRowButton.setOnAction(event -> {
             try {
                 Station selection = stationsTable.getSelectionModel().getSelectedItem();
                 stationsTable.getItems().remove(selection);
                 Database.removeStation(selection);
-            } catch (Exception ex) {}
+            } catch (Exception ex) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Unexpected error during deletion process!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
         });
+    }
+
+    private void clearInput() {
+        nameTextField.setText("");
+        value1TextField.setText("");
+        value2TextField.setText("");
+        suppliersTableView.getSelectionModel().clearSelection();
     }
 }

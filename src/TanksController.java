@@ -7,12 +7,15 @@ import entities.Tank;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.controlsfx.control.Notifications;
 
 import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -54,6 +57,76 @@ public class TanksController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mapTankEntityToTableView();
+        refillTanksTableView();
+        initStationsComboBox();
+        initAddTankButton();
+        initDeleteRowButton();
+    }
+
+    private void initDeleteRowButton() {
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Tank selection = tanksTable.getSelectionModel().getSelectedItem();
+                tanksTable.getItems().remove(selection);
+                Database.removeTank(selection);
+            } catch (Exception ex) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Unexpected error during deletion process!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
+        });
+    }
+
+    private void initAddTankButton() {
+        addTankButton.setOnAction(event -> {
+            try {
+                String selectedStationName = stationsNamesComboBox.getSelectionModel().getSelectedItem();
+                Station selectedStation = Database.getStationByName(selectedStationName);
+
+                Database.addTank(new Tank(Database.getTanks().size() + 1,
+                        Double.parseDouble(value1TextField.getText()),
+                        Double.parseDouble(value2TextField.getText()),
+                        Double.parseDouble(value3TextField.getText()),
+                        Double.parseDouble(value4TextField.getText()),
+                        Double.parseDouble(value5TextField.getText()),
+                        selectedStation.getId(),
+                        selectedStation.getName()));
+                value1TextField.setText("");
+                value2TextField.setText("");
+                value3TextField.setText("");
+                value4TextField.setText("");
+                value5TextField.setText("");
+                refillTanksTableView();
+            } catch (NumberFormatException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Values should be numeric!")
+                        .position(Pos.CENTER)
+                        .showError();
+            } catch (NullPointerException | NoSuchElementException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("No station has been selected!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
+        });
+    }
+
+    private void initStationsComboBox() {
+        List<Station> stations = Database.getStations();
+        List<String> stationsNames = stations.stream().map(Station::getName).collect(Collectors.toList());
+        stationsNamesComboBox.setItems(FXCollections.observableArrayList(stationsNames));
+    }
+
+    private void refillTanksTableView() {
+        tanksTable.setItems(Database.getTanks());
+    }
+
+    private void mapTankEntityToTableView() {
         tanksIdColumn.setCellValueFactory(new PropertyValueFactory<Tank,String>("id"));
         tanksValue1Column.setCellValueFactory(new PropertyValueFactory<Tank,String>("initialFillFactor"));
         tanksValue2Column.setCellValueFactory(new PropertyValueFactory<Tank,String>("tankRadius"));
@@ -61,40 +134,5 @@ public class TanksController extends Controller implements Initializable {
         tanksValue4Column.setCellValueFactory(new PropertyValueFactory<Tank,String>("tankThickness"));
         tanksValue5Column.setCellValueFactory(new PropertyValueFactory<Tank,String>("leakChance"));
         tanksStationColumn.setCellValueFactory(new PropertyValueFactory<Tank,String>("stationName"));
-        tanksTable.setItems(Database.getTanks());
-
-        // Load stations names
-        List<Station> stations = Database.getStations();
-        List<String> stationsNames = stations.stream().map(Station::getName).collect(Collectors.toList());
-        stationsNamesComboBox.setItems(FXCollections.observableArrayList(stationsNames));
-
-        addTankButton.setOnAction(event -> {
-            String selectedStationName = stationsNamesComboBox.getSelectionModel().getSelectedItem();
-            Station selectedStation = Database.getStationByName(selectedStationName);
-
-
-            Database.addTank(new Tank(Database.getTanks().size()+1,
-                                Double.parseDouble(value1TextField.getText()),
-                                Double.parseDouble(value2TextField.getText()),
-                                Double.parseDouble(value3TextField.getText()),
-                                Double.parseDouble(value4TextField.getText()),
-                                Double.parseDouble(value5TextField.getText()),
-                                selectedStation.getId(),
-                                selectedStation.getName()));
-            value1TextField.setText("");
-            value2TextField.setText("");
-            value3TextField.setText("");
-            value4TextField.setText("");
-            value5TextField.setText("");
-            tanksTable.setItems(Database.getTanks());
-        });
-
-        deleteRowButton.setOnAction(event -> {
-            try {
-                Tank selection = tanksTable.getSelectionModel().getSelectedItem();
-                tanksTable.getItems().remove(selection);
-                Database.removeTank(selection);
-            } catch (Exception ex) {}
-        });
     }
 }
