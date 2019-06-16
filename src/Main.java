@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         setUpStage(primaryStage);
-        replaceSceneContent("stations.fxml");
+        replaceSceneContent("suppliers.fxml");
         currentStage.show();
     }
 

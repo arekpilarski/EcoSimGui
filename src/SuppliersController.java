@@ -21,15 +21,11 @@ public class SuppliersController extends Controller implements Initializable {
     private TableColumn suppliersNameColumn;
     @FXML
     private TableColumn suppliersValue1Column;
-    @FXML
-    private TableColumn suppliersValue2Column;
 
     @FXML
     private JFXTextField nameTextField;
     @FXML
     private JFXTextField value1TextField;
-    @FXML
-    private JFXTextField value2TextField;
     @FXML
     private JFXButton addSupplierButton;
 
@@ -37,8 +33,7 @@ public class SuppliersController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         suppliersIdColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("id"));
         suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("name"));
-        suppliersValue1Column.setCellValueFactory(new PropertyValueFactory<Supplier,String>("value1"));
-        suppliersValue2Column.setCellValueFactory(new PropertyValueFactory<Supplier,String>("value2"));
+        suppliersValue1Column.setCellValueFactory(new PropertyValueFactory<Supplier,String>("theftChance"));
         suppliersTable.setItems(Database.getSuppliers());
 
         addSupplierButton.setOnAction(event -> {
@@ -47,7 +42,6 @@ public class SuppliersController extends Controller implements Initializable {
                     Double.parseDouble(value1TextField.getText())));
             nameTextField.setText("");
             value1TextField.setText("");
-            value2TextField.setText("");
             suppliersTable.setItems(Database.getSuppliers());
         });
     }

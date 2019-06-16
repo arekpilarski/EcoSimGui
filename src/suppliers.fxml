@@ -27,6 +27,16 @@
                   </Label>
                </children>
             </Pane>
+            <Button fx:id="suppliers_button" mnemonicParsing="false" onAction="#moveToSuppliers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Suppliers" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="drivers_button" mnemonicParsing="false" onAction="#moveToDrivers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Drivers" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
             <Button fx:id="stations_button" mnemonicParsing="false" onAction="#moveToStations" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Stations" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="20.0" />
@@ -38,16 +48,6 @@
                </font>
             </Button>
             <Button fx:id="deformationsButton" mnemonicParsing="false" onAction="#moveToDeformations" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Deformations" textFill="WHITE">
-               <font>
-                  <Font name="System Italic" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="suppliers_button" mnemonicParsing="false" onAction="#moveToSuppliers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Suppliers" textFill="WHITE">
-               <font>
-                  <Font name="System Italic" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="drivers_button" mnemonicParsing="false" onAction="#moveToDrivers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Drivers" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="20.0" />
                </font>
@@ -72,8 +72,7 @@
               <columns>
                 <TableColumn fx:id="suppliersIdColumn" prefWidth="55.199951171875" text="ID" />
                 <TableColumn fx:id="suppliersNameColumn" prefWidth="190.4000244140625" text="Name" />
-                  <TableColumn fx:id="suppliersValue1Column" prefWidth="75.0" text="Value1" />
-                  <TableColumn fx:id="suppliersValue2Column" prefWidth="75.0" text="Value2" />
+                  <TableColumn fx:id="suppliersValue1Column" prefWidth="75.0" text="Theft chance" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -82,9 +81,8 @@
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="48.0" prefWidth="619.0" text="Suppliers" textAlignment="CENTER" />
          </children>
       </GridPane>
-      <JFXTextField fx:id="nameTextField" layoutX="497.0" layoutY="151.0" promptText="Name" />
-      <JFXTextField fx:id="value1TextField" layoutX="497.0" layoutY="189.0" promptText="Value1" />
-      <JFXTextField fx:id="value2TextField" layoutX="497.0" layoutY="228.0" promptText="Value2" />
+      <JFXTextField fx:id="nameTextField" layoutX="497.0" layoutY="198.0" promptText="Name" />
+      <JFXTextField fx:id="value1TextField" layoutX="497.0" layoutY="236.0" promptText="Theft chance" />
       <JFXButton fx:id="addSupplierButton" layoutX="497.0" layoutY="275.0" prefHeight="28.0" prefWidth="135.0" text="Add" />
    </children>
 </AnchorPane>

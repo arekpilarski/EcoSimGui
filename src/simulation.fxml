@@ -25,6 +25,16 @@
                   </Label>
                </children>
             </Pane>
+            <Button fx:id="suppliers_button" mnemonicParsing="false" onAction="#moveToSuppliers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Suppliers" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="drivers_button" mnemonicParsing="false" onAction="#moveToDrivers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Drivers" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
             <Button fx:id="stations_button" mnemonicParsing="false" onAction="#moveToStations" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Stations" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="20.0" />
@@ -36,16 +46,6 @@
                </font>
             </Button>
             <Button fx:id="deformationsButton" mnemonicParsing="false" onAction="#moveToDeformations" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Deformations" textFill="WHITE">
-               <font>
-                  <Font name="System Italic" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="suppliers_button" mnemonicParsing="false" onAction="#moveToSuppliers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Suppliers" textFill="WHITE">
-               <font>
-                  <Font name="System Italic" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="drivers_button" mnemonicParsing="false" onAction="#moveToDrivers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Drivers" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="20.0" />
                </font>

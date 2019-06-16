@@ -5,13 +5,15 @@ public class Driver {
     private String name;
     private double age;
     private double theftChance;
+    private String supplierName;
     private long supplierId;
 
-    public Driver(long id, String name, double age, double theftChance, long supplierId) {
+    public Driver(long id, String name, double age, double theftChance, String supplierName, long supplierId) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.theftChance = theftChance;
+        this.supplierName = supplierName;
         this.supplierId = supplierId;
     }
 
@@ -33,5 +35,9 @@ public class Driver {
 
     public long getSupplierId() {
         return supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
     }
 }

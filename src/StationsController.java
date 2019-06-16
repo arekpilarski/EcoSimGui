@@ -2,15 +2,15 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import database.Database;
 import entities.Station;
+import entities.Supplier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class StationsController extends Controller implements Initializable {
@@ -25,7 +25,14 @@ public class StationsController extends Controller implements Initializable {
     @FXML
     private TableColumn stationsValue2Column;
     @FXML
-    private TableColumn stationsValue3Column;
+    private TableColumn stationsSuppliersColumn;
+
+    @FXML
+    private TableView<Supplier> suppliersTableView;
+    @FXML
+    private TableColumn suppliersNameColumn;
+    @FXML
+    private TableColumn suppliersTheftChanceColumn;
 
 
     @FXML
@@ -35,29 +42,34 @@ public class StationsController extends Controller implements Initializable {
     @FXML
     private JFXTextField value2TextField;
     @FXML
-    private JFXTextField value3TextField;
-    @FXML
     private JFXButton addStationButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         stationsIdColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("id"));
         stationsNameColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
-        stationsValue1Column.setCellValueFactory(new PropertyValueFactory<Station,String>("value1"));
-        stationsValue2Column.setCellValueFactory(new PropertyValueFactory<Station,String>("value2"));
-        stationsValue3Column.setCellValueFactory(new PropertyValueFactory<Station,String>("value3"));
+        stationsValue1Column.setCellValueFactory(new PropertyValueFactory<Station,String>("fuelSalesFactor"));
+        stationsValue2Column.setCellValueFactory(new PropertyValueFactory<Station,String>("climateOffset"));
+        stationsSuppliersColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("supplierNames"));
         stationsTable.setItems(Database.getStations());
+
+        suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
+        suppliersTheftChanceColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("theftChance"));
+        suppliersTableView.setItems(Database.getSuppliers());
+        suppliersTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         addStationButton.setOnAction(event -> {
             Database.addStation(new Station(Database.getStations().size()+1,
                     nameTextField.getText(),
                     Double.parseDouble(value1TextField.getText()),
                     Double.parseDouble(value2TextField.getText()),
-                    new ArrayList<>()));
+                    suppliersTableView.getSelectionModel().getSelectedItems()));
             nameTextField.setText("");
             value1TextField.setText("");
             value2TextField.setText("");
-            value3TextField.setText("");
+            suppliersTableView.getSelectionModel().clearSelection();
+
+
             stationsTable.setItems(Database.getStations());
         });
     }

@@ -7,6 +7,7 @@ public class Station {
     private String name;
     private double fuelSalesFactor;
     private double climateOffset;
+    private String supplierNames;
     private List<Supplier> suppliers;
 
     public Station(long id, String name, double fuelSalesFactor, double climateOffset, List<Supplier> suppliers) {
@@ -15,6 +16,10 @@ public class Station {
         this.fuelSalesFactor = fuelSalesFactor;
         this.climateOffset = climateOffset;
         this.suppliers = suppliers;
+
+        StringBuilder supplierNames= new StringBuilder();
+        suppliers.stream().forEach(supplier -> supplierNames.append(supplier.getName()).append(","));
+        this.supplierNames = supplierNames.deleteCharAt(supplierNames.lastIndexOf(",")).toString();
     }
 
     public String getName() {
@@ -35,5 +40,9 @@ public class Station {
 
     public List<Supplier> getSuppliers() {
         return suppliers;
+    }
+
+    public String getSupplierNames() {
+        return supplierNames;
     }
 }

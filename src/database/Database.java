@@ -50,5 +50,17 @@ public class Database {
         deformations.add(deformation);
     }
 
+    public static Station getStationByName(String name) {
+        return stations.stream()
+                .filter(station -> station.getName().equals(name))
+                .findAny().get();
+    }
+
+    public static Supplier getSupplierByName(String name) {
+        return suppliers.stream()
+                .filter(supplier -> supplier.getName().equals(name))
+                .findAny().get();
+    }
+
 
 }
