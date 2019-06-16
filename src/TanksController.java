@@ -49,6 +49,8 @@ public class TanksController extends Controller implements Initializable {
     private JFXComboBox<String> stationsNamesComboBox;
     @FXML
     private JFXButton addTankButton;
+    @FXML
+    private JFXButton deleteRowButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,6 +87,14 @@ public class TanksController extends Controller implements Initializable {
             value4TextField.setText("");
             value5TextField.setText("");
             tanksTable.setItems(Database.getTanks());
+        });
+
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Tank selection = tanksTable.getSelectionModel().getSelectedItem();
+                tanksTable.getItems().remove(selection);
+                Database.removeTank(selection);
+            } catch (Exception ex) {}
         });
     }
 }

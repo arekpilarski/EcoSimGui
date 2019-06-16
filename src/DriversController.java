@@ -43,6 +43,8 @@ public class DriversController extends Controller implements Initializable {
 
     @FXML
     private JFXButton addDriverButton;
+    @FXML
+    private JFXButton deleteRowButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,6 +75,14 @@ public class DriversController extends Controller implements Initializable {
             value2TextField.setText("");
             selectSupplierComboBox.getSelectionModel().clearSelection();
             driversTable.setItems(Database.getDrivers());
+        });
+
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Driver selection = driversTable.getSelectionModel().getSelectedItem();
+                driversTable.getItems().remove(selection);
+                Database.removeDriver(selection);
+            } catch (Exception ex) {}
         });
     }
 

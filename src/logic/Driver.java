@@ -15,7 +15,6 @@ public class Driver {
 
     /**
      * Main method of the application
-     * @param args Command line arguments, none are necessary in this application.
      */
     public static void run(List<Deformation> deformations,
                             List<entities.Driver> drivers,
