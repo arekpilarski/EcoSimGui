@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="639.0" prefWidth="874.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SuppliersController">
+   <children>
+      <VBox layoutX="-1.0" layoutY="-2.0" prefHeight="645.0" prefWidth="258.0" style="-fx-background-color: #3F2B63;">
+         <children>
+            <Pane prefHeight="106.0" prefWidth="259.0">
+               <children>
+                  <Label alignment="TOP_CENTER" layoutX="72.0" layoutY="27.0" text="EcoSim" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="suppliers_button" mnemonicParsing="false" onAction="#moveToSuppliers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Suppliers" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="drivers_button" mnemonicParsing="false" onAction="#moveToDrivers" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Drivers" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="stations_button" mnemonicParsing="false" onAction="#moveToStations" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Stations" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="tanks_button" mnemonicParsing="false" onAction="#moveToTanks" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Tanks" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="deformationsButton" mnemonicParsing="false" onAction="#moveToDeformations" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Deformations" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="simulation_button" mnemonicParsing="false" onAction="#moveToSimulation" prefHeight="40.0" prefWidth="275.0" style="-fx-background-color: #3F2B90;" text="Simulation" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <GridPane layoutX="257.0" layoutY="368.0" prefHeight="235.0" prefWidth="614.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="198.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="424.8" minHeight="10.0" prefHeight="193.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TableView fx:id="suppliersTable" prefHeight="205.0" prefWidth="614.0" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="suppliersIdColumn" prefWidth="55.199951171875" text="ID" />
+                <TableColumn fx:id="suppliersNameColumn" prefWidth="190.4000244140625" text="Name" />
+                  <TableColumn fx:id="suppliersValue1Column" prefWidth="75.0" text="Theft chance" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="48.0" prefWidth="619.0" text="Suppliers" textAlignment="CENTER" />
+         </children>
+      </GridPane>
+      <JFXTextField fx:id="nameTextField" layoutX="497.0" layoutY="198.0" promptText="Name" />
+      <JFXTextField fx:id="value1TextField" layoutX="497.0" layoutY="236.0" promptText="Theft chance" />
+      <JFXButton fx:id="addSupplierButton" layoutX="497.0" layoutY="275.0" prefHeight="28.0" prefWidth="135.0" style="-fx-background-color: #e6eeff;" text="Add" />
+       <JFXButton fx:id="deleteRowButton" layoutX="497.0" layoutY="603.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="135.0" style="-fx-background-color: #e6eeff;" text="Delete selected row" />
+   </children>
+</AnchorPane>
