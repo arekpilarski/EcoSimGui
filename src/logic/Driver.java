@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.io.File;
+import java.util.Objects;
 
 /**
  * Driver class is the main class of the application. It acts as a container for the main method.
@@ -22,6 +23,13 @@ public class Driver {
                             List<entities.Supplier> suppliers,
                             List<entities.Tank> tanks,
                            String outputDirectory) {
+
+        System.out.println("Deformations: " + deformations.size());
+        System.out.println("Drivers: " + drivers.size());
+        System.out.println("Stations: " + stations.size());
+        System.out.println("Suppliers: " + suppliers.size());
+        System.out.println("Tanks: " + tanks.size());
+        System.out.println("Station suppliers: " + stations.get(0).getSuppliers().size());
 
         // Generate suppliers and drivers
         List<Supplier> supplierList = new ArrayList<>();
@@ -65,15 +73,20 @@ public class Driver {
             List<Supplier> stationSuppliers = new ArrayList<>();
             for (entities.Supplier supplier : station.getSuppliers()) {
                 for (Supplier generatedSupplier : supplierList) {
-                    if (supplier.getName() == generatedSupplier.getName()) {
+                    if (Objects.equals(supplier.getName(), generatedSupplier.getName())) {
                         stationSuppliers.add(generatedSupplier);
                         break;
                     }
                 }
             }
-
             stationList.add(new FuelStation(station, stationTanks, stationSuppliers));
+            System.out.println("Generated station suppliers list: " + stationSuppliers.size());
+            System.out.println("Generated station tanks list: " + stationTanks.size());
         }
+
+
+        System.out.println("Generated suppliers list: " + supplierList.size());
+        System.out.println("Generated stations list: " + stationList.size());
 
         // Iterate through the data
         MyCalendar currentDate = new MyCalendar();

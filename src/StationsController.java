@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.controlsfx.control.Notifications;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
@@ -96,7 +97,7 @@ public class StationsController extends Controller implements Initializable {
                 if(name.isEmpty() || selectedSuppliers.isEmpty())
                     throw new NoSuchElementException();
                 Database.addStation(new Station(Database.STATIONS_INDEX,
-                        nameTextField.getText(), fuelSalesFactor, climateOffset, selectedSuppliers));
+                        name, fuelSalesFactor, climateOffset, selectedSuppliers));
                 clearInput();
 
                 refillStationsTableView();

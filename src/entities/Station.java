@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Station {
@@ -15,7 +16,8 @@ public class Station {
         this.name = name;
         this.fuelSalesFactor = fuelSalesFactor;
         this.climateOffset = climateOffset;
-        this.suppliers = suppliers;
+        this.suppliers = new ArrayList<>();
+        this.suppliers.addAll(suppliers);
 
         StringBuilder supplierNames= new StringBuilder();
         suppliers.stream().forEach(supplier -> supplierNames.append(supplier.getName()).append(","));
