@@ -3,41 +3,35 @@ package entities;
 public class Driver {
     private long id;
     private String name;
-    private double value1;
-    private double value2;
-    private String supplier;
+    private double age;
+    private double theftChance;
+    private long supplierId;
 
-    public Driver(String name, double value1, double value2) {
-        this.name = name;
-        this.value1 = value1;
-        this.value2 = value2;
-    }
-
-    public Driver(long id, String name, double value1, double value2, String supplier) {
+    public Driver(long id, String name, double age, double theftChance, long supplierId) {
         this.id = id;
         this.name = name;
-        this.value1 = value1;
-        this.value2 = value2;
-        this.supplier = supplier;
+        this.age = age;
+        this.theftChance = theftChance;
+        this.supplierId = supplierId;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getValue1() {
-        return value1;
+    public double getAge() {
+        return age;
     }
 
-    public double getValue2() {
-        return value2;
+    public double getTheftChance() {
+        return theftChance;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getSupplier() {
-        return supplier;
+    public long getSupplierId() {
+        return supplierId;
     }
 }

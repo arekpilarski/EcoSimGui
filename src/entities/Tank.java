@@ -2,50 +2,50 @@ package entities;
 
 public class Tank {
     private long id;
-    private double value1;
-    private double value2;
-    private double value3;
-    private double value4;
-    private double value5;
-    private String station;
+    private double tankVolume;
+    private double tankRadius;
+    private double tankHeight;
+    private double tankThickness;
+    private double leakChance;
+    private long stationId;
 
-    public Tank(long id, double value1,
-                   double value2, double value3,
-                   double value4, double value5, String station) {
+    public Tank(long id, double tankVolume,
+                double tankRadius, double tankHeight,
+                double tankThickness, double leakChance, long stationId) {
         this.id = id;
-        this.value1 = value1;
-        this.value2 = value2;
-        this.value3 = value3;
-        this.value4 = value4;
-        this.value5 = value5;
-        this.station = station;
+        this.tankVolume = tankVolume;
+        this.tankRadius = tankRadius;
+        this.tankHeight = tankHeight;
+        this.tankThickness = tankThickness;
+        this.leakChance = leakChance;
+        this.stationId = stationId;
     }
 
     public long getId() {
         return id;
     }
 
-    public double getValue1() {
-        return value1;
+    public double getTankVolume() {
+        return tankVolume;
     }
 
-    public double getValue2() {
-        return value2;
+    public double getTankRadius() {
+        return tankRadius;
     }
 
-    public double getValue3() {
-        return value3;
+    public double getTankHeight() {
+        return tankHeight;
     }
 
-    public double getValue4() {
-        return value4;
+    public double getTankThickness() {
+        return tankThickness;
     }
 
-    public double getValue5() {
-        return value5;
+    public double getLeakChance() {
+        return leakChance;
     }
 
-    public String getStation() {
-        return station;
+    public long getStationId() {
+        return stationId;
     }
 }

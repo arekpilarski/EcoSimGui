@@ -63,7 +63,7 @@ public class TanksController extends Controller implements Initializable {
                     Double.parseDouble(value3TextField.getText()),
                     Double.parseDouble(value4TextField.getText()),
                     Double.parseDouble(value5TextField.getText()),
-                    stationTextField.getText()));
+                    Long.parseLong(stationTextField.getText())));
             value1TextField.setText("");
             value2TextField.setText("");
             value3TextField.setText("");

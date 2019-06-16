@@ -3,14 +3,12 @@ package entities;
 public class Supplier {
     private long id;
     private String name;
-    private double value1;
-    private double value2;
+    private double theftChance;
 
-    public Supplier(long id, String name, double value1, double value2) {
+    public Supplier(long id, String name, double theftChance) {
         this.id = id;
         this.name = name;
-        this.value1 = value1;
-        this.value2 = value2;
+        this.theftChance = theftChance;
     }
 
     public long getId() {
@@ -21,11 +19,7 @@ public class Supplier {
         return name;
     }
 
-    public double getValue1() {
-        return value1;
-    }
-
-    public double getValue2() {
-        return value2;
+    public double getTheftChance() {
+        return theftChance;
     }
 }

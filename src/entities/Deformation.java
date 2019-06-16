@@ -2,30 +2,30 @@ package entities;
 
 public class Deformation {
     private long id;
-    private double value1;
-    private double value2;
-    private String Tank;
+    private double height;
+    private double value;
+    private long tankId;
 
-    public Deformation(long id, double value1, double value2, String tank) {
+    public Deformation(long id, double height, double value, long tankId) {
         this.id = id;
-        this.value1 = value1;
-        this.value2 = value2;
-        Tank = tank;
+        this.height = height;
+        this.value = value;
+        this.tankId = tankId;
     }
 
     public long getId() {
         return id;
     }
 
-    public double getValue1() {
-        return value1;
+    public double getHeight() {
+        return height;
     }
 
-    public double getValue2() {
-        return value2;
+    public double getValue() {
+        return value;
     }
 
-    public String getTank() {
-        return Tank;
+    public long getTankId() {
+        return tankId;
     }
 }

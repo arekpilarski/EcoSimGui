@@ -1,37 +1,39 @@
 package entities;
 
+import java.util.List;
+
 public class Station {
     private long id;
     private String name;
-    private double value1;
-    private double value2;
-    private double value3;
+    private double fuelSalesFactor;
+    private double climateOffset;
+    private List<Supplier> suppliers;
 
-    public Station(long id, String name, double value1, double value2, double value3) {
+    public Station(long id, String name, double fuelSalesFactor, double climateOffset, List<Supplier> suppliers) {
         this.id = id;
         this.name = name;
-        this.value1 = value1;
-        this.value2 = value2;
-        this.value3 = value3;
+        this.fuelSalesFactor = fuelSalesFactor;
+        this.climateOffset = climateOffset;
+        this.suppliers = suppliers;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getValue1() {
-        return value1;
+    public double getFuelSalesFactor() {
+        return fuelSalesFactor;
     }
 
-    public double getValue2() {
-        return value2;
-    }
-
-    public double getValue3() {
-        return value3;
+    public double getClimateOffset() {
+        return climateOffset;
     }
 
     public long getId() {
         return id;
+    }
+
+    public List<Supplier> getSuppliers() {
+        return suppliers;
     }
 }

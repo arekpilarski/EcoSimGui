@@ -44,8 +44,7 @@ public class SuppliersController extends Controller implements Initializable {
         addSupplierButton.setOnAction(event -> {
             Database.addSupplier(new Supplier(Database.getSuppliers().size()+1,
                     nameTextField.getText(),
-                    Double.parseDouble(value1TextField.getText()),
-                    Double.parseDouble(value2TextField.getText())));
+                    Double.parseDouble(value1TextField.getText())));
             nameTextField.setText("");
             value1TextField.setText("");
             value2TextField.setText("");

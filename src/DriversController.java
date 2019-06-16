@@ -51,7 +51,8 @@ public class DriversController extends Controller implements Initializable {
             Database.addDriver(new Driver(Database.getDrivers().size()+1,
                     nameTextField.getText(),
                     Double.parseDouble(value1TextField.getText()),
-                    Double.parseDouble(value2TextField.getText()), supplierTextField.getText()));
+                    Double.parseDouble(value2TextField.getText()),
+                    Long.parseLong(supplierTextField.getText())));
             nameTextField.setText("");
             value1TextField.setText("");
             value2TextField.setText("");

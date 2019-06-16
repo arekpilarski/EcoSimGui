@@ -50,7 +50,7 @@ public class DeformationsController extends Controller implements Initializable 
             Database.addDeformation(new Deformation(Database.getDeformations().size()+1,
                     Double.parseDouble(value1TextField.getText()),
                     Double.parseDouble(value2TextField.getText()),
-                    tankTextField.getText()));
+                    Long.parseLong(tankTextField.getText())));
             value1TextField.setText("");
             value2TextField.setText("");
             tankTextField.setText("");

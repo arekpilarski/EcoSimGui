@@ -8,7 +8,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class StationsController extends Controller implements Initializable {
@@ -51,7 +53,7 @@ public class StationsController extends Controller implements Initializable {
                     nameTextField.getText(),
                     Double.parseDouble(value1TextField.getText()),
                     Double.parseDouble(value2TextField.getText()),
-                    Double.parseDouble(value3TextField.getText())));
+                    new ArrayList<>()));
             nameTextField.setText("");
             value1TextField.setText("");
             value2TextField.setText("");
