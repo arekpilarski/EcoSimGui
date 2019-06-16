@@ -75,7 +75,7 @@ public class DeformationsController extends Controller implements Initializable 
     private void initAddDeformationButton() {
         addDeformationButton.setOnAction(event -> {
             try {
-                Database.addDeformation(new Deformation(Database.getDeformations().size() + 1,
+                Database.addDeformation(new Deformation(Database.DEFORMATIONS_INDEX,
                         Double.parseDouble(value1TextField.getText()),
                         Double.parseDouble(value2TextField.getText()),
                         selectTankComboBox.getSelectionModel().getSelectedItem()));

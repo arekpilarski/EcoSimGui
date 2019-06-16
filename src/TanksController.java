@@ -83,27 +83,26 @@ public class TanksController extends Controller implements Initializable {
     private void initAddTankButton() {
         addTankButton.setOnAction(event -> {
             try {
+                double initialFillFactor = Double.parseDouble(value1TextField.getText());
+                double radius = Double.parseDouble(value2TextField.getText());
+                double height = Double.parseDouble(value3TextField.getText());
+                double thickness = Double.parseDouble(value4TextField.getText());
+                double leakChance = Double.parseDouble(value5TextField.getText());
+                if(initialFillFactor < 0 || radius < 0 || height < 0 || thickness < 0 || leakChance < 0)
+                    throw new NumberFormatException();
+
                 String selectedStationName = stationsNamesComboBox.getSelectionModel().getSelectedItem();
                 Station selectedStation = Database.getStationByName(selectedStationName);
 
-                Database.addTank(new Tank(Database.getTanks().size() + 1,
-                        Double.parseDouble(value1TextField.getText()),
-                        Double.parseDouble(value2TextField.getText()),
-                        Double.parseDouble(value3TextField.getText()),
-                        Double.parseDouble(value4TextField.getText()),
-                        Double.parseDouble(value5TextField.getText()),
-                        selectedStation.getId(),
-                        selectedStation.getName()));
-                value1TextField.setText("");
-                value2TextField.setText("");
-                value3TextField.setText("");
-                value4TextField.setText("");
-                value5TextField.setText("");
+                Database.addTank(new Tank(Database.TANKS_INDEX,
+                        initialFillFactor, radius, height, thickness, leakChance,
+                        selectedStation.getId(), selectedStation.getName()));
+                clearInput();
                 refillTanksTableView();
             } catch (NumberFormatException exc) {
                 Notifications.create()
                         .title("Error")
-                        .text("Values should be numeric!")
+                        .text("Numeric values should be positive!")
                         .position(Pos.CENTER)
                         .showError();
             } catch (NullPointerException | NoSuchElementException exc) {
@@ -114,6 +113,14 @@ public class TanksController extends Controller implements Initializable {
                         .showError();
             }
         });
+    }
+
+    private void clearInput() {
+        value1TextField.setText("");
+        value2TextField.setText("");
+        value3TextField.setText("");
+        value4TextField.setText("");
+        value5TextField.setText("");
     }
 
     private void initStationsComboBox() {

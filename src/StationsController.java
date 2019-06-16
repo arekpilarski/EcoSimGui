@@ -14,6 +14,7 @@ import org.controlsfx.control.Notifications;
 
 import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
 public class StationsController extends Controller implements Initializable {
@@ -87,10 +88,14 @@ public class StationsController extends Controller implements Initializable {
             try {
                 double fuelSalesFactor = Double.parseDouble(value1TextField.getText());
                 double climateOffset = Double.parseDouble(value2TextField.getText());
+                String name = nameTextField.getText();
                 List<Supplier> selectedSuppliers = suppliersTableView.getSelectionModel().getSelectedItems();
+
                 if(fuelSalesFactor < 0 || climateOffset < 0)
                     throw new NumberFormatException();
-                Database.addStation(new Station(Database.getStations().size() + 1,
+                if(name.isEmpty() || selectedSuppliers.isEmpty())
+                    throw new NoSuchElementException();
+                Database.addStation(new Station(Database.STATIONS_INDEX,
                         nameTextField.getText(), fuelSalesFactor, climateOffset, selectedSuppliers));
                 clearInput();
 
@@ -98,13 +103,13 @@ public class StationsController extends Controller implements Initializable {
             } catch (NumberFormatException exc) {
                 Notifications.create()
                         .title("Error")
-                        .text("Height and Value should be positive numeric values!")
+                        .text("Fuel sales factor and climate offset should be positive numeric values!")
                         .position(Pos.CENTER)
                         .showError();
-            } catch (NullPointerException exc) {
+            } catch (NullPointerException | NoSuchElementException exc) {
                 Notifications.create()
                         .title("Error")
-                        .text("No tank id has been selected!")
+                        .text("Provide station name and select suppliers.")
                         .position(Pos.CENTER)
                         .showError();
             }

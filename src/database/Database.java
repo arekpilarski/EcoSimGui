@@ -14,6 +14,12 @@ public class Database {
     public static List<Tank> tanks = new ArrayList<>();
     public static List<Deformation> deformations = new ArrayList<>();
 
+    public static long DRIVERS_INDEX = 1;
+    public static long SUPPLIERS_INDEX = 1;
+    public static long STATIONS_INDEX = 1;
+    public static long TANKS_INDEX = 1;
+    public static long DEFORMATIONS_INDEX = 1;
+
     public static ObservableList<Driver> getDrivers() {
         return FXCollections.observableArrayList(drivers);
     }
@@ -32,22 +38,27 @@ public class Database {
 
     public static void addDriver(Driver driver) {
         drivers.add(driver);
+        DRIVERS_INDEX++;
     }
 
     public static void addStation(Station station) {
         stations.add(station);
+        STATIONS_INDEX++;
     }
 
     public static void addSupplier(Supplier supplier) {
         suppliers.add(supplier);
+        SUPPLIERS_INDEX++;
     }
 
     public static void addTank(Tank tank) {
         tanks.add(tank);
+        TANKS_INDEX++;
     }
 
     public static void addDeformation(Deformation deformation) {
         deformations.add(deformation);
+        DEFORMATIONS_INDEX++;
     }
 
     public static void removeDeformation(Deformation deformation) {

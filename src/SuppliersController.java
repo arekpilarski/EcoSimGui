@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.controlsfx.control.Notifications;
 
 import java.net.URL;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
 public class SuppliersController extends Controller implements Initializable {
@@ -58,14 +59,39 @@ public class SuppliersController extends Controller implements Initializable {
     }
 
     private void initAddSupplierButton() {
-        addSupplierButton.setOnAction(event -> {
-            Database.addSupplier(new Supplier(Database.getSuppliers().size()+1,
-                    nameTextField.getText(),
-                    Double.parseDouble(value1TextField.getText())));
-            nameTextField.setText("");
-            value1TextField.setText("");
-            refillSuppliersTableView();
-        });
+            addSupplierButton.setOnAction(event -> {
+                try {
+                    double theftChance = Double.parseDouble(value1TextField.getText());
+                    String name = nameTextField.getText();
+                    if(theftChance < 0)
+                        throw new NumberFormatException();
+                    if (name.isEmpty())
+                        throw new NoSuchElementException();
+
+                    Database.addSupplier(new Supplier(Database.SUPPLIERS_INDEX,
+                            name, theftChance));
+
+                    clearInput();
+                    refillSuppliersTableView();
+                } catch (NumberFormatException exc) {
+                    Notifications.create()
+                            .title("Error")
+                            .text("Theft chance numeric value should be positive!")
+                            .position(Pos.CENTER)
+                            .showError();
+                } catch (NoSuchElementException exc) {
+                    Notifications.create()
+                            .title("Error")
+                            .text("No name has been provided!")
+                            .position(Pos.CENTER)
+                            .showError();
+                }
+            });
+    }
+
+    private void clearInput() {
+        nameTextField.setText("");
+        value1TextField.setText("");
     }
 
     private void refillSuppliersTableView() {

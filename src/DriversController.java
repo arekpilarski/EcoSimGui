@@ -15,6 +15,7 @@ import org.controlsfx.control.Notifications;
 
 import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -59,20 +60,39 @@ public class DriversController extends Controller implements Initializable {
 
     private void initAddDriverButton() {
         addDriverButton.setOnAction(event -> {
-            String selectedSupplierName = selectSupplierComboBox.getSelectionModel().getSelectedItem();
-            Supplier selectedSupplier = Database.getSupplierByName(selectedSupplierName);
+            try {
+                double age = Double.parseDouble(value1TextField.getText());
+                double theftChance = Double.parseDouble(value2TextField.getText());
+                String name = nameTextField.getText();
 
-            Database.addDriver(new Driver(Database.getDrivers().size()+1,
-                    nameTextField.getText(),
-                    Double.parseDouble(value1TextField.getText()),
-                    Double.parseDouble(value2TextField.getText()),
-                    selectedSupplier.getName(),
-                    selectedSupplier.getId()));
-            nameTextField.setText("");
-            value1TextField.setText("");
-            value2TextField.setText("");
-            selectSupplierComboBox.getSelectionModel().clearSelection();
-            refillDriversTableView();
+                if(age < 0 || theftChance < 0)
+                    throw new NumberFormatException();
+                if(name.isEmpty())
+                    throw new NoSuchElementException();
+
+                String selectedSupplierName = selectSupplierComboBox.getSelectionModel().getSelectedItem();
+                Supplier selectedSupplier = Database.getSupplierByName(selectedSupplierName);
+
+                Database.addDriver(new Driver(Database.DRIVERS_INDEX,
+                        name, age, theftChance, selectedSupplier.getName(), selectedSupplier.getId()));
+                nameTextField.setText("");
+                value1TextField.setText("");
+                value2TextField.setText("");
+                selectSupplierComboBox.getSelectionModel().clearSelection();
+                refillDriversTableView();
+            } catch (NumberFormatException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Age and theft chance should be positive numeric values!")
+                        .position(Pos.CENTER)
+                        .showError();
+            } catch (NullPointerException | NoSuchElementException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Provide both driver name and supplier!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
         });
     }
 
