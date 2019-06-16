@@ -90,10 +90,10 @@ public class Driver {
         }
 
         // End simulation
-//        for (FuelStation station : stationList) {
-//            for(Tank tank : station.getTanks()) {
-//                tank.writeData();
-//            }
-//        }
+        for (FuelStation station : stationList) {
+            for(Tank tank : station.getTanks()) {
+                tank.writeData();
+            }
+        }
     }
 }

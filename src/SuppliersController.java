@@ -28,6 +28,8 @@ public class SuppliersController extends Controller implements Initializable {
     private JFXTextField value1TextField;
     @FXML
     private JFXButton addSupplierButton;
+    @FXML
+    private JFXButton deleteRowButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +45,14 @@ public class SuppliersController extends Controller implements Initializable {
             nameTextField.setText("");
             value1TextField.setText("");
             suppliersTable.setItems(Database.getSuppliers());
+        });
+
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Supplier selection = suppliersTable.getSelectionModel().getSelectedItem();
+                suppliersTable.getItems().remove(selection);
+                Database.removeSupplier(selection);
+            } catch (Exception ex) {}
         });
     }
 }

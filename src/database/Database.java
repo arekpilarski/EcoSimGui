@@ -50,6 +50,26 @@ public class Database {
         deformations.add(deformation);
     }
 
+    public static void removeDeformation(Deformation deformation) {
+        deformations.remove(deformation);
+
+    }
+    public static void removeDriver(Driver driver) {
+        drivers.remove(driver);
+    }
+
+    public static void removeStation(Station station) {
+        stations.remove(station);
+    }
+
+    public static void removeSupplier(Supplier supplier) {
+        suppliers.remove(supplier);
+    }
+
+    public static void removeTank(Tank tank) {
+        tanks.remove(tank);
+    }
+
     public static Station getStationByName(String name) {
         return stations.stream()
                 .filter(station -> station.getName().equals(name))
@@ -61,6 +81,4 @@ public class Database {
                 .filter(supplier -> supplier.getName().equals(name))
                 .findAny().get();
     }
-
-
 }

@@ -41,6 +41,8 @@ public class DeformationsController extends Controller implements Initializable 
 
     @FXML
     private JFXButton addDeformationButton;
+    @FXML
+    private JFXButton deleteRowButton;
 
 
     @Override
@@ -65,6 +67,14 @@ public class DeformationsController extends Controller implements Initializable 
             value2TextField.setText("");
             selectTankComboBox.getSelectionModel().clearSelection();
             deformationsTable.setItems(Database.getDeformations());
+        });
+
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Deformation selection = deformationsTable.getSelectionModel().getSelectedItem();
+                deformationsTable.getItems().remove(selection);
+                Database.removeDeformation(selection);
+            } catch (Exception ex) {}
         });
     }
 }

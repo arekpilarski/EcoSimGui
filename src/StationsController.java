@@ -43,6 +43,8 @@ public class StationsController extends Controller implements Initializable {
     private JFXTextField value2TextField;
     @FXML
     private JFXButton addStationButton;
+    @FXML
+    private JFXButton deleteRowButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +73,14 @@ public class StationsController extends Controller implements Initializable {
 
 
             stationsTable.setItems(Database.getStations());
+        });
+
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Station selection = stationsTable.getSelectionModel().getSelectedItem();
+                stationsTable.getItems().remove(selection);
+                Database.removeStation(selection);
+            } catch (Exception ex) {}
         });
     }
 }
