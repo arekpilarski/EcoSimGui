@@ -44,7 +44,7 @@ public class Main extends Application {
         List<Deformation> deformations = new ArrayList<>();
         deformations.add(new Deformation(0, 0.1, 0.1, 0));
 
-        Driver.run(deformations, drivers, stations, suppliers, tanks);
+        //Driver.run(deformations, drivers, stations, suppliers, tanks);
         // End test
         
         launch(args);

@@ -21,7 +21,8 @@ public class Driver {
                             List<entities.Driver> drivers,
                             List<Station> stations,
                             List<entities.Supplier> suppliers,
-                            List<entities.Tank> tanks) {
+                            List<entities.Tank> tanks,
+                           String outputDirectory) {
 
         // Generate suppliers and drivers
         List<Supplier> supplierList = new ArrayList<>();
@@ -90,10 +91,10 @@ public class Driver {
         }
 
         // End simulation
-//        for (FuelStation station : stationList) {
-//            for(Tank tank : station.getTanks()) {
-//                tank.writeData();
-//            }
-//        }
+        for (FuelStation station : stationList) {
+            for(Tank tank : station.getTanks()) {
+                tank.writeData(outputDirectory);
+            }
+        }
     }
 }

@@ -340,9 +340,9 @@ public class Tank {
     /**
      * Writes all the generated and stored data to a file.
      */
-    public void writeData() {
+    public void writeData(String outputDirectory) {
         try {
-            String fileName = "data\\generated_data\\" + stationName + "_tank" + number + "_data.txt";
+            String fileName = outputDirectory + "\\" + stationName + "_tank" + number + "_data.txt";
             writer = new PrintWriter(new File(fileName));
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
