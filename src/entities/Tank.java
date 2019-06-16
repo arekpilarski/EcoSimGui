@@ -2,31 +2,26 @@ package entities;
 
 public class Tank {
     private long id;
-    private double tankVolume;
     private double tankRadius;
     private double tankHeight;
     private double tankThickness;
+    private double initialFillFactor;
     private double leakChance;
     private long stationId;
 
-    public Tank(long id, double tankVolume,
-                double tankRadius, double tankHeight,
-                double tankThickness, double leakChance, long stationId) {
+    public Tank(long id, double tankRadius, double tankHeight,
+                double tankThickness, double initialFillFactor, double leakChance, long stationId) {
         this.id = id;
-        this.tankVolume = tankVolume;
         this.tankRadius = tankRadius;
         this.tankHeight = tankHeight;
         this.tankThickness = tankThickness;
+        this.initialFillFactor = initialFillFactor;
         this.leakChance = leakChance;
         this.stationId = stationId;
     }
 
     public long getId() {
         return id;
-    }
-
-    public double getTankVolume() {
-        return tankVolume;
     }
 
     public double getTankRadius() {
@@ -36,6 +31,8 @@ public class Tank {
     public double getTankHeight() {
         return tankHeight;
     }
+
+    public double getInitialFillFactor() { return initialFillFactor; }
 
     public double getTankThickness() {
         return tankThickness;
