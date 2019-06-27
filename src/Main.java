@@ -5,8 +5,14 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ * Main class of the application.
+ */
 public class Main extends Application {
+
+    /**
+     * Current view.
+     */
     static Stage currentStage;
 
     @Override
@@ -16,6 +22,9 @@ public class Main extends Application {
         currentStage.show();
     }
 
+    /**
+     * Sets up application window.
+     */
     private void setUpStage(Stage stage) {
         currentStage = stage;
         currentStage.setTitle("EcoSim");
@@ -26,6 +35,9 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**
+     * Updates application window view.
+     */
     public static Parent replaceSceneContent(String fxml) throws Exception {
         Parent page = FXMLLoader.load(Main.class.getResource(fxml), null, new JavaFXBuilderFactory());
         Scene scene = currentStage.getScene();

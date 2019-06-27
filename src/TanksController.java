@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
+/**
+ * Controller class for tanks view. Creates the view and fills it with necessary data.
+ */
 public class TanksController extends Controller implements Initializable {
     @FXML
     private TableView<Tank> tanksTable;
@@ -64,22 +66,9 @@ public class TanksController extends Controller implements Initializable {
         initDeleteRowButton();
     }
 
-    private void initDeleteRowButton() {
-        deleteRowButton.setOnAction(event -> {
-            try {
-                Tank selection = tanksTable.getSelectionModel().getSelectedItem();
-                tanksTable.getItems().remove(selection);
-                Database.removeTank(selection);
-            } catch (Exception ex) {
-                Notifications.create()
-                        .title("Error")
-                        .text("Unexpected error during deletion process!")
-                        .position(Pos.CENTER)
-                        .showError();
-            }
-        });
-    }
-
+    /**
+     * Initializes add tank button with logic responsible for adding object to database.
+     */
     private void initAddTankButton() {
         addTankButton.setOnAction(event -> {
             try {
@@ -115,24 +104,28 @@ public class TanksController extends Controller implements Initializable {
         });
     }
 
-    private void clearInput() {
-        value1TextField.setText("");
-        value2TextField.setText("");
-        value3TextField.setText("");
-        value4TextField.setText("");
-        value5TextField.setText("");
+    /**
+     * Initializes delete row button with logic responsible for removing object from database.
+     */
+    private void initDeleteRowButton() {
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Tank selection = tanksTable.getSelectionModel().getSelectedItem();
+                tanksTable.getItems().remove(selection);
+                Database.removeTank(selection);
+            } catch (Exception ex) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Unexpected error during deletion process!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
+        });
     }
 
-    private void initStationsComboBox() {
-        List<Station> stations = Database.getStations();
-        List<String> stationsNames = stations.stream().map(Station::getName).collect(Collectors.toList());
-        stationsNamesComboBox.setItems(FXCollections.observableArrayList(stationsNames));
-    }
-
-    private void refillTanksTableView() {
-        tanksTable.setItems(Database.getTanks());
-    }
-
+    /**
+     * Maps database entity into table view.
+     */
     private void mapTankEntityToTableView() {
         tanksIdColumn.setCellValueFactory(new PropertyValueFactory<Tank,String>("id"));
         tanksValue1Column.setCellValueFactory(new PropertyValueFactory<Tank,String>("initialFillFactor"));
@@ -141,5 +134,33 @@ public class TanksController extends Controller implements Initializable {
         tanksValue4Column.setCellValueFactory(new PropertyValueFactory<Tank,String>("tankThickness"));
         tanksValue5Column.setCellValueFactory(new PropertyValueFactory<Tank,String>("leakChance"));
         tanksStationColumn.setCellValueFactory(new PropertyValueFactory<Tank,String>("stationName"));
+    }
+
+    /**
+     * Fills combobox with stations names values from database.
+     */
+    private void initStationsComboBox() {
+        List<Station> stations = Database.getStations();
+        List<String> stationsNames = stations.stream().map(Station::getName).collect(Collectors.toList());
+        stationsNamesComboBox.setItems(FXCollections.observableArrayList(stationsNames));
+    }
+
+    /**
+     * Reloads the data in table view.
+     */
+    private void refillTanksTableView() {
+        tanksTable.setItems(Database.getTanks());
+    }
+
+
+    /**
+     * Clears user input.
+     */
+    private void clearInput() {
+        value1TextField.setText("");
+        value2TextField.setText("");
+        value3TextField.setText("");
+        value4TextField.setText("");
+        value5TextField.setText("");
     }
 }

@@ -1,11 +1,34 @@
 package entities;
 
+/**
+ * Driver class stores provided user input data about driver.
+ */
 public class Driver {
     private long id;
+
+    /**
+     * Driver's name.
+     */
     private String name;
+
+    /**
+     * Driver's age.
+     */
     private double age;
+
+    /**
+     * Chance for the driver to steal fuel during the delivery.
+     */
     private double theftChance;
+
+    /**
+     * Name of the supplier the driver belongs to.
+     */
     private String supplierName;
+
+    /**
+     * Id of the supplier the driver belongs to.
+     */
     private long supplierId;
 
     public Driver(long id, String name, double age, double theftChance, String supplierName, long supplierId) {

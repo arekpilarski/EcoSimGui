@@ -13,7 +13,9 @@ import org.controlsfx.control.Notifications;
 import java.net.URL;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class for suppliers view. Creates the view and fills it with necessary data.
+ */
 public class SuppliersController extends Controller implements Initializable {
     @FXML
     private TableView<Supplier> suppliersTable;
@@ -42,6 +44,43 @@ public class SuppliersController extends Controller implements Initializable {
         initDeleteRowButton();
     }
 
+    /**
+     * Initializes add supplier button with logic responsible for adding object to database.
+     */
+    private void initAddSupplierButton() {
+        addSupplierButton.setOnAction(event -> {
+            try {
+                double theftChance = Double.parseDouble(value1TextField.getText());
+                String name = nameTextField.getText();
+                if(theftChance < 0)
+                    throw new NumberFormatException();
+                if (name.isEmpty())
+                    throw new NoSuchElementException();
+
+                Database.addSupplier(new Supplier(Database.SUPPLIERS_INDEX,
+                        name, theftChance));
+
+                clearInput();
+                refillSuppliersTableView();
+            } catch (NumberFormatException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Theft chance numeric value should be positive!")
+                        .position(Pos.CENTER)
+                        .showError();
+            } catch (NoSuchElementException exc) {
+                Notifications.create()
+                        .title("Error")
+                        .text("No name has been provided!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
+        });
+    }
+
+    /**
+     * Initializes delete row button with logic responsible for removing object from database.
+     */
     private void initDeleteRowButton() {
         deleteRowButton.setOnAction(event -> {
             try {
@@ -58,49 +97,27 @@ public class SuppliersController extends Controller implements Initializable {
         });
     }
 
-    private void initAddSupplierButton() {
-            addSupplierButton.setOnAction(event -> {
-                try {
-                    double theftChance = Double.parseDouble(value1TextField.getText());
-                    String name = nameTextField.getText();
-                    if(theftChance < 0)
-                        throw new NumberFormatException();
-                    if (name.isEmpty())
-                        throw new NoSuchElementException();
-
-                    Database.addSupplier(new Supplier(Database.SUPPLIERS_INDEX,
-                            name, theftChance));
-
-                    clearInput();
-                    refillSuppliersTableView();
-                } catch (NumberFormatException exc) {
-                    Notifications.create()
-                            .title("Error")
-                            .text("Theft chance numeric value should be positive!")
-                            .position(Pos.CENTER)
-                            .showError();
-                } catch (NoSuchElementException exc) {
-                    Notifications.create()
-                            .title("Error")
-                            .text("No name has been provided!")
-                            .position(Pos.CENTER)
-                            .showError();
-                }
-            });
-    }
-
-    private void clearInput() {
-        nameTextField.setText("");
-        value1TextField.setText("");
-    }
-
-    private void refillSuppliersTableView() {
-        suppliersTable.setItems(Database.getSuppliers());
-    }
-
+    /**
+     * Maps database entity into table view.
+     */
     private void mapSupplierEntityToTableView() {
         suppliersIdColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("id"));
         suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Supplier,String>("name"));
         suppliersValue1Column.setCellValueFactory(new PropertyValueFactory<Supplier,String>("theftChance"));
+    }
+
+    /**
+     * Reloads the data in table view.
+     */
+    private void refillSuppliersTableView() {
+        suppliersTable.setItems(Database.getSuppliers());
+    }
+
+    /**
+     * Clears user input.
+     */
+    private void clearInput() {
+        nameTextField.setText("");
+        value1TextField.setText("");
     }
 }

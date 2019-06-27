@@ -3,12 +3,35 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Station class stores provided user input data about station.
+ */
 public class Station {
     private long id;
+
+    /**
+     * Name of the fuel station.
+     */
     private String name;
+
+    /**
+     * Factor that determines how much fuel will be sold daily on avarage.
+     */
     private double fuelSalesFactor;
+
+    /**
+     * Factor that determines temperature that surrounds the station.
+     */
     private double climateOffset;
+
+    /**
+     * String containing concatenated names of suppliers for the station.
+     */
     private String supplierNames;
+
+    /**
+     * List of suppliers for the station.
+     */
     private List<Supplier> suppliers;
 
     public Station(long id, String name, double fuelSalesFactor, double climateOffset, List<Supplier> suppliers) {

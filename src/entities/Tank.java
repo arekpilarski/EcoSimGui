@@ -1,13 +1,44 @@
 package entities;
 
+/**
+ * Tank class stores provided user input data about tank.
+ */
 public class Tank {
     private long id;
+
+    /**
+     * Factor that tells how much fuel should there be in the tank at the moment of creation.
+     */
     private double initialFillFactor;
+
+    /**
+     * Radius of the tank's base.
+     */
     private double tankRadius;
+
+    /**
+     * Height of the tank.
+     */
     private double tankHeight;
+
+    /**
+     * Thickness of the tank's wall.
+     */
     private double tankThickness;
+
+    /**
+     * Chance for the leak to appear during one day.
+     */
     private double leakChance;
+
+    /**
+     * Name of the station the tank belongs to.
+     */
     private String stationName;
+
+    /**
+     * Id of the station the tank belongs to.
+     */
     private long stationId;
 
     public Tank(long id, double initialFillFactor,

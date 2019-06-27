@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
+/**
+ * Controller class for drivers view. Creates the view and fills it with necessary data.
+ */
 public class DriversController extends Controller implements Initializable {
     @FXML
     private TableView<Driver> driversTable;
@@ -58,6 +60,9 @@ public class DriversController extends Controller implements Initializable {
         initDeleteRowButton();
     }
 
+    /**
+     * Initializes add driver button with logic responsible for adding object to database.
+     */
     private void initAddDriverButton() {
         addDriverButton.setOnAction(event -> {
             try {
@@ -96,24 +101,9 @@ public class DriversController extends Controller implements Initializable {
         });
     }
 
-    private void initSupplierComboBox() {
-        List<Supplier> suppliers = Database.getSuppliers();
-        List<String> suppliersNames = suppliers.stream().map(Supplier::getName).collect(Collectors.toList());
-        selectSupplierComboBox.setItems(FXCollections.observableArrayList(suppliersNames));
-    }
-
-    private void refillDriversTableView() {
-        driversTable.setItems(Database.getDrivers());
-    }
-
-    private void mapDriverEntityToTableView() {
-        driversIdColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("id"));
-        driversNameColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("name"));
-        driversValue1Column.setCellValueFactory(new PropertyValueFactory<Driver,String>("age"));
-        driversValue2Column.setCellValueFactory(new PropertyValueFactory<Driver,String>("theftChance"));
-        driversSupplierColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("supplierName"));
-    }
-
+    /**
+     * Initializes delete row button with logic responsible for removing object from database.
+     */
     private void initDeleteRowButton() {
         deleteRowButton.setOnAction(event -> {
             try {
@@ -130,5 +120,30 @@ public class DriversController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Maps database entity into table view.
+     */
+    private void mapDriverEntityToTableView() {
+        driversIdColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("id"));
+        driversNameColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("name"));
+        driversValue1Column.setCellValueFactory(new PropertyValueFactory<Driver,String>("age"));
+        driversValue2Column.setCellValueFactory(new PropertyValueFactory<Driver,String>("theftChance"));
+        driversSupplierColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("supplierName"));
+    }
 
+    /**
+     * Fills combobox with suppliers names values from database.
+     */
+    private void initSupplierComboBox() {
+        List<Supplier> suppliers = Database.getSuppliers();
+        List<String> suppliersNames = suppliers.stream().map(Supplier::getName).collect(Collectors.toList());
+        selectSupplierComboBox.setItems(FXCollections.observableArrayList(suppliersNames));
+    }
+
+    /**
+     * Reloads the data in table view.
+     */
+    private void refillDriversTableView() {
+        driversTable.setItems(Database.getDrivers());
+    }
 }

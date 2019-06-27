@@ -11,7 +11,9 @@ import org.controlsfx.control.Notifications;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class for simulation view. Creates the view and fills it with necessary data.
+ */
 public class SimulationController extends Controller implements Initializable {
 
     @FXML

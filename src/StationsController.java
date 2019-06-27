@@ -13,11 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.controlsfx.control.Notifications;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class for stations view. Creates the view and fills it with necessary data.
+ */
 public class StationsController extends Controller implements Initializable {
     @FXML
     private TableView<Station> stationsTable;
@@ -61,20 +62,32 @@ public class StationsController extends Controller implements Initializable {
         initDeleteRowButton();
     }
 
+    /**
+     * Loads suppliers data into selection table view.
+     */
     private void prepareSuppliersTableView() {
         suppliersTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         suppliersTableView.setItems(Database.getSuppliers());
     }
 
+    /**
+     * Maps database entity into table view.
+     */
     private void mapSuppliersEntityToTableView() {
         suppliersNameColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
         suppliersTheftChanceColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("theftChance"));
     }
 
+    /**
+     * Reloads the data in table view.
+     */
     private void refillStationsTableView() {
         stationsTable.setItems(Database.getStations());
     }
 
+    /**
+     * Maps database entity into table view.
+     */
     private void mapStationsEntityToTableView() {
         stationsIdColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("id"));
         stationsNameColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
@@ -83,6 +96,10 @@ public class StationsController extends Controller implements Initializable {
         stationsSuppliersColumn.setCellValueFactory(new PropertyValueFactory<Station,String>("supplierNames"));
     }
 
+
+    /**
+     * Initializes add station button with logic responsible for adding object to database.
+     */
     private void initAddStationButton() {
         addStationButton.setOnAction(event -> {
 
@@ -117,6 +134,9 @@ public class StationsController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Initializes delete row button with logic responsible for removing object from database.
+     */
     private void initDeleteRowButton() {
         deleteRowButton.setOnAction(event -> {
             try {
@@ -133,6 +153,9 @@ public class StationsController extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Clears user input.
+     */
     private void clearInput() {
         nameTextField.setText("");
         value1TextField.setText("");

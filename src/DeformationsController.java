@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+
+/**
+ * Controller class for deformations view. Creates the view and fills it with necessary data.
+ */
 public class DeformationsController extends Controller implements Initializable {
 
     @FXML
@@ -56,22 +60,9 @@ public class DeformationsController extends Controller implements Initializable 
         initDeleteRowButton();
     }
 
-    private void initDeleteRowButton() {
-        deleteRowButton.setOnAction(event -> {
-            try {
-                Deformation selection = deformationsTable.getSelectionModel().getSelectedItem();
-                deformationsTable.getItems().remove(selection);
-                Database.removeDeformation(selection);
-            } catch (Exception ex) {
-                Notifications.create()
-                        .title("Error")
-                        .text("Unexpected error during deletion process!")
-                        .position(Pos.CENTER)
-                        .showError();
-            }
-        });
-    }
-
+    /**
+     * Initializes add deformation button with logic responsible for adding object to database.
+     */
     private void initAddDeformationButton() {
         addDeformationButton.setOnAction(event -> {
             try {
@@ -79,9 +70,7 @@ public class DeformationsController extends Controller implements Initializable 
                         Double.parseDouble(value1TextField.getText()),
                         Double.parseDouble(value2TextField.getText()),
                         selectTankComboBox.getSelectionModel().getSelectedItem()));
-                value1TextField.setText("");
-                value2TextField.setText("");
-                selectTankComboBox.getSelectionModel().clearSelection();
+                clearUserInput();
                 refillDeformationsTableView();
             } catch (NumberFormatException exc) {
                 Notifications.create()
@@ -99,10 +88,28 @@ public class DeformationsController extends Controller implements Initializable 
         });
     }
 
-    private void refillDeformationsTableView() {
-        deformationsTable.setItems(Database.getDeformations());
+    /**
+     * Initializes delete row button with logic responsible for removing object from database.
+     */
+    private void initDeleteRowButton() {
+        deleteRowButton.setOnAction(event -> {
+            try {
+                Deformation selection = deformationsTable.getSelectionModel().getSelectedItem();
+                deformationsTable.getItems().remove(selection);
+                Database.removeDeformation(selection);
+            } catch (Exception ex) {
+                Notifications.create()
+                        .title("Error")
+                        .text("Unexpected error during deletion process!")
+                        .position(Pos.CENTER)
+                        .showError();
+            }
+        });
     }
 
+    /**
+     * Maps database entity into table view.
+     */
     private void mapDeformationEntityToTableView() {
         deformationsIdColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("id"));
         deformationsValue1Column.setCellValueFactory(new PropertyValueFactory<Driver,String>("height"));
@@ -110,9 +117,34 @@ public class DeformationsController extends Controller implements Initializable 
         deformationsTankColumn.setCellValueFactory(new PropertyValueFactory<Driver,String>("tankId"));
     }
 
+    /**
+     * Fills combobox with tank id values from database.
+     */
     private void initSelectTankComboBox() {
         List<Tank> tanks = Database.tanks;
         List<Long> tanksIds = tanks.stream().map(Tank::getId).collect(Collectors.toList());
         selectTankComboBox.setItems(FXCollections.observableArrayList(tanksIds));
     }
+
+    /**
+     * Reloads the data in table view.
+     */
+    private void refillDeformationsTableView() {
+        deformationsTable.setItems(Database.getDeformations());
+    }
+
+
+    /**
+     * Clears user input.
+     */
+    private void clearUserInput() {
+        value1TextField.setText("");
+        value2TextField.setText("");
+        selectTankComboBox.getSelectionModel().clearSelection();
+    }
+
+
+
+
+
 }
